@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   release:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
@@ -23,13 +23,13 @@ jobs:
   linuxamd64build:
     name: build x-ui amd64 version
     needs: release
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.18
+          go-version: 1.19
       - name: build linux amd64 version
         run: |
           CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o xui-release -v main.go
@@ -54,7 +54,7 @@ jobs:
       - name: upload
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GAYHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
           asset_path: x-ui-linux-amd64.tar.gz
@@ -63,13 +63,13 @@ jobs:
   linuxarm64build:
     name: build x-ui arm64 version
     needs: release
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.18
+          go-version: 1.19
       - name: build linux arm64 version
         run: |
           sudo apt-get update
@@ -96,7 +96,7 @@ jobs:
       - name: upload
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GAYHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
           asset_path: x-ui-linux-arm64.tar.gz
@@ -105,13 +105,13 @@ jobs:
   linuxs390xbuild:
     name: build x-ui s390x version
     needs: release
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.18
+          go-version: 1.19
       - name: build linux s390x version
         run: |
           sudo apt-get update
@@ -138,7 +138,7 @@ jobs:
       - name: upload
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GAYHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
           asset_path: x-ui-linux-s390x.tar.gz
