@@ -178,21 +178,22 @@ func (j *StatsNotifyJob) OnReceive() *StatsNotifyJob {
 
 			resp, del, upd := j.telegramService.HandleCallback(update.CallbackQuery)
 
-			if upd {
-				updateMsg := tgbotapi.NewEditMessageText(update.CallbackQuery.Message.Chat.ID, update.CallbackQuery.Message.MessageID, resp.Text)
-				keyboard := resp.ReplyMarkup.(tgbotapi.InlineKeyboardMarkup)
-				updateMsg.ReplyMarkup = &keyboard
+			if resp != nil {
+				if upd {
+					updateMsg := tgbotapi.NewEditMessageText(update.CallbackQuery.Message.Chat.ID, update.CallbackQuery.Message.MessageID, resp.Text)
+					keyboard := resp.ReplyMarkup.(tgbotapi.InlineKeyboardMarkup)
+					updateMsg.ReplyMarkup = &keyboard
 
-				if _, err := bot.Request(updateMsg); err != nil {
-					logger.Warning(err)
-				}
-			} else if resp != nil {
-				_, err := bot.Send(resp)
-				if err != nil {
-					logger.Warning(err)
+					if _, err := bot.Request(updateMsg); err != nil {
+						logger.Warning(err)
+					}
+				} else {
+					_, err := bot.Send(resp)
+					if err != nil {
+						logger.Warning(err)
+					}
 				}
 			}
-
 			if del {
 				deleteMsg := tgbotapi.NewDeleteMessage(update.CallbackQuery.Message.Chat.ID, update.CallbackQuery.Message.MessageID)
 				if _, err := bot.Request(deleteMsg); err != nil {

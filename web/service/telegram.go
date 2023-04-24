@@ -275,9 +275,13 @@ func (t *TelegramService) HandleCallback(callback *tgbotapi.CallbackQuery) (resp
 			lang = client.Language
 		}
 
-		resp, _ = t.GetClientUsage(chatId, strings.TrimPrefix(callback.Data, updateCommandPrefix), t.settingService.GetTgCrmEnabled(), lang)
+		resp, err = t.GetClientUsage(chatId, strings.TrimPrefix(callback.Data, updateCommandPrefix), t.settingService.GetTgCrmEnabled(), lang)
 		delete = false
-		update = true
+		if err == nil {
+			update = true
+		} else {
+			update = false
+		}
 		return
 	} else if strings.HasPrefix(callback.Data, renewCommandPrefix) {
 		if _, exists := TgSessions[callback.Message.Chat.ID]; !exists {
