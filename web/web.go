@@ -296,6 +296,8 @@ func (s *Server) initI18n(engine *gin.Engine) error {
 }
 
 func (s *Server) startTask() {
+	s.inboundService.CleanupTrafficForRemovedClients()
+
 	err := s.xrayService.RestartXray(true)
 	if err != nil {
 		logger.Warning("start xray failed:", err)

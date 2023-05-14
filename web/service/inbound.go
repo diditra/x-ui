@@ -437,3 +437,45 @@ func (s *InboundService) GetClientTrafficById(uuid string) (traffic *xray.Client
 	}
 	return traffic, err
 }
+
+/*
+Cleans up the leftover client traffic information from the database
+for clients that have been removed.
+*/
+func (s *InboundService) CleanupTrafficForRemovedClients() {
+	db := database.GetDB()
+	var clientTraffics []*xray.ClientTraffic
+	dbClientTraffics := db.Model(xray.ClientTraffic{}).Find(&clientTraffics)
+	err := dbClientTraffics.Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		logger.Error("DB garbage cleanup failed: ", err)
+		return
+	}
+
+	var inbounds []*model.Inbound
+	err = db.Model(model.Inbound{}).Where("Protocol in ?", []model.Protocol{model.VMess, model.VLESS}).Find(&inbounds).Error
+	if err != nil {
+		logger.Error("DB garbage cleanup failed: ", err)
+		return
+	}
+
+	logger.Info("Found a total of ", len(clientTraffics), " clients in the database")
+
+	for i := range clientTraffics {
+		clientExists := false
+		for j := range inbounds {
+			if strings.Contains(inbounds[j].Settings, "\""+clientTraffics[i].Email+"\"") {
+				clientExists = true
+			}
+		}
+		if !clientExists {
+			logger.Info("Client ", clientTraffics[i].Email, " doesn't exist under any inbound. Traffic info will be removed.")
+			err = db.Delete(&xray.ClientTraffic{}, "email =?", clientTraffics[i].Email).Error
+			if err != nil {
+				logger.Error(err)
+				continue
+			}
+		}
+	}
+
+}
