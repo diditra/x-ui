@@ -34,6 +34,7 @@ var defaultValueMap = map[string]string{
 	"tgBotChatId":              "0",
 	"tgRunTime":                "",
 	"tgCrmEnabled":             "false",
+	"tgCrmSoldOut":             "false",
 	"tgClientRegFinalMsg":      "Congratulations! Your account is created. You will soon receive an email.",
 	"tgMoneyTransferMsg":       "Please transfer the fee to the following wallet/account and send over the receipt.",
 	"tgClientRegAccList":       "1- One user 1 month\n2- Two users 2 months",
@@ -294,6 +295,14 @@ func (s *SettingService) GetTimeLocation() (*time.Location, error) {
 
 func (s *SettingService) GetTgCrmEnabled() bool {
 	crmEnabled, err := s.getBool("tgCrmEnabled")
+	if err != nil {
+		return false
+	}
+	return crmEnabled
+}
+
+func (s *SettingService) GetTgCrmSoldOut() bool {
+	crmEnabled, err := s.getBool("tgCrmSoldOut")
 	if err != nil {
 		return false
 	}

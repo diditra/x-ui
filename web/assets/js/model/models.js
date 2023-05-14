@@ -171,6 +171,7 @@ class AllSetting {
         this.tgRunTime = "";
         this.xrayTemplateConfig = "";
         this.tgCrmEnabled = false;
+        this.tgCrmSoldOut = false;
         this.tgClientRegAccList = "";
         this.tgClientRegFinalMsg = "";
         this.tgMoneyTransferMsg = "";

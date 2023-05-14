@@ -163,6 +163,11 @@ func IdleState(s *TgSession, msg *tgbotapi.Message) *tgbotapi.MessageConfig {
 			break
 		}
 
+		if s.telegramService.settingService.GetTgCrmSoldOut() {
+			resp.Text = Tr("msgSoldOut", s.lang)
+			break
+		}
+
 		client, _ := s.telegramService.getTgClient(msg.Chat.ID)
 		s.client = client
 

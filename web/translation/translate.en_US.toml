@@ -208,6 +208,8 @@
 "telegramCrm" = "Telegram CRM"
 "telegramCrmEnabled" = "Telegram CRM"
 "telegramCrmEnableDesc" = "Enable built-in client management system via TG bot"
+"telegramCrmSoldOut" = "Disable sale"
+"telegramCrmSoldOutDesc" = "Disable sale of new accounts on the server, only renewal will be enabled"
 "telegramRegApprovalMsg" = "New account message"
 "telegramRegApprovalDesc" = "Will be sent to the user right after the request is approved"
 "telegramMoneyTransferMsg" = "Money transfer instructions"

@@ -108,6 +108,7 @@
                         <a-tab-pane key="5" tab='{{ i18n "pages.setting.tg.telegramCrm"}}'>
                             <a-list item-layout="horizontal" style="background: white">
                                 <setting-list-item type="switch" title='{{ i18n "pages.setting.tg.telegramCrmEnabled" }}' desc='{{ i18n "pages.setting.tg.telegramCrmEnableDesc" }}'  v-model="allSetting.tgCrmEnabled"></setting-list-item>
+                                <setting-list-item type="switch" title='{{ i18n "pages.setting.tg.telegramCrmSoldOut" }}' desc='{{ i18n "pages.setting.tg.telegramCrmSoldOutDesc" }}'  v-model="allSetting.tgCrmSoldOut"></setting-list-item>
                                 <setting-list-item type="number" title='{{ i18n "pages.setting.tg.telegramCrmTargetInbound" }}' desc='{{ i18n "pages.setting.tg.telegramCrmTargetInboundDesc" }}'  v-model="allSetting.telegramCrmTargetInbound"></setting-list-item>
                                 <setting-list-item type="textarea" title='{{ i18n "pages.setting.tg.telegramRegAccList"}}' v-model="allSetting.tgClientRegAccList"></setting-list-item>
                                 <setting-list-item type="textarea" title='{{ i18n "pages.setting.tg.telegramRegApprovalMsg"}}' desc='{{ i18n "pages.setting.tg.telegramRegApprovalDesc" }}'  v-model="allSetting.tgClientRegFinalMsg"></setting-list-item>

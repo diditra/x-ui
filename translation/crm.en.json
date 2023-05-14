@@ -32,6 +32,7 @@
 	"msgNotActive": "This feature is not available. Please contact support!",
 	"msgTrafficExceeds85": "The account below has exceeded 85% of its quota! Please consider renewing.",
 	"msgAccExpiringSoon": "The account below expires in less than 24 hours. Please consider renewing.",
+	"msgSoldOut": "Sorry! Currently this server is at full capacity. You can only renew your current accounts.",
 
 	"incorrectUuid": "Incorrect UUID!",
 	"yes": "Yes",
